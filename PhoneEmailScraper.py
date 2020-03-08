@@ -1,3 +1,6 @@
+#! python3
+# PhoneEmailScraper.py - Finds phone numbers and email addresses on the clipboard.
+
 import re
 
 import pyperclip
@@ -20,7 +23,7 @@ phoneRegex = re.compile(
     re.VERBOSE,
 )
 
-# TODO: Create a regex for email addresses
+# Create a regex for email addresses
 emailRegex = re.compile(
     r"""
 # some.+_thing@some.+_thing.com
@@ -32,14 +35,20 @@ emailRegex = re.compile(
     re.VERBOSE,
 )
 
-# TODO: Get the text off the clipboard
+# Get the text off the clipboard
 text = pyperclip.paste()
 
-# TODO: Extract the email/phone from this text
+# Extract the email/phone from this text
 extractedPhone = phoneRegex.findall(text)
 extractedEmail = emailRegex.findall(text)
 
-print(extractedPhone)
-print(extractedEmail)
+allPhoneNumbers = []
+for phoneNumber in extractedPhone:
+    allPhoneNumbers.append(phoneNumber[0])
 
-# TODO: Copy the extracted email/phone to the clipboard
+print(allPhoneNumbers)
+
+# Copy the extracted email/phone to the clipboard
+results = "\n".join(allPhoneNumbers) + "\n" + "\n".join(extractedEmail)
+pyperclip.copy(results)
+
